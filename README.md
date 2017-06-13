@@ -1,4 +1,4 @@
-# Defect-Report
+# Defect-Report - KTU duomenų bazių laboratorinis darbas
 .NET Core aplikacija ir duomenų bazė kurta KTU Duomenų Bazių moduliui.
 
 Iš pirmo atsiskaitymo gavau 9, antro ir trečio - 10.
