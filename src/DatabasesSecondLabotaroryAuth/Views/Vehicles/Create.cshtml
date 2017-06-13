@@ -1,0 +1,228 @@
+@model DatabasesSecondLabotaroryAuth.Models.ComplexCreateModels.VehicleCreateModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h2>Create</h2>
+
+<form asp-action="Create">
+    <div class="form-horizontal">
+        <h4>Vehicle</h4>
+        <hr />
+        @*<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div class="form-group">
+        <label asp-for="LicensePlates" class="col-md-2 control-label"></label>
+        <div class="col-md-10">
+            <input asp-for="LicensePlates" class="form-control" />
+            <span asp-validation-for="LicensePlates" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="form-group">
+        <label asp-for="CompanyId" class="col-md-2 control-label"></label>
+        <div class="col-md-10">
+            <select asp-for="CompanyId" class ="form-control" asp-items="ViewBag.CompanyId"></select>
+        </div>
+    </div>
+    <div class="form-group">
+        <label asp-for="VehicleTypeId" class="col-md-2 control-label"></label>
+        <div class="col-md-10">
+            <select asp-for="VehicleTypeId" class ="form-control" asp-items="ViewBag.VehicleTypeId"></select>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Create" class="btn btn-default" />
+        </div>
+    </div>*@
+        <div class="row">
+            <div class="col-lg-8 col-md-8">
+                <table class="table table-responsive table-bordered table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th>
+                                License Plates
+                            </th>
+                            <th>
+                                Company
+                            </th>
+                            <th>
+                                VehicleType
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody class="rows">
+                        @for (int i = 0; i < Model.Vehicles.Count(); i++)
+                        {
+                            <tr>
+                                <th>
+                                    <input class="form-control" name="Model.Vehicles[@i].LicensePlates" value="@Model.Vehicles.ElementAt(i).LicensePlates" />
+                                </th>
+                                <th>
+                                    <select class="form-control" name="Model.Vehicles[@i].CompanyId" asp-items="ViewBag.CompanyId"></select>
+                                </th>
+                                <th>
+                                    <select class="form-control" name="Model.Vehicles[@i].VehicleType.Title" asp-items="ViewBag.VehicleTypeId"></select>
+                                </th>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+                <button class="btn btn-primary addMore">Add more</button>
+            </div>
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-lg-3 col-md-3">
+            <table class="table table-bordered table-hover table-responsive table-striped" id="vehicleTypesTable">
+                <thead>
+                    <tr>
+                        <th>
+                            Vehicle Type
+                        </th>
+                    </tr>
+                </thead>
+                <tbody class="vehicleTypeRows">
+                    @for(int i = 0; i < Model.VehicleTypes.Count(); i++)
+                    {
+                        <tr>
+                            <th>
+                                <input class="form-control" name="Model.VehicleTypes[@i].Title" value="@Model.VehicleTypes.ElementAt(i).Title"/>
+                            </th>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            <button class="btn btn-primary addMoreVehicleType">Add more</button>
+        </div>
+    </div>
+    <br />
+    <button class="btn btn-success" type="submit">Save</button>
+</form>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+<script>
+    var vehicleTypeSelections = @Html.Raw(Json.Serialize(ViewBag.VehicleTypeId));
+    console.log("vehicleTypeSelections", vehicleTypeSelections);
+    var companySelections = @Html.Raw(Json.Serialize(ViewBag.CompanyId));
+    $(document).ready(() => {
+        var mainContext = this;
+        $(".addMore").click((e) => {
+            e.preventDefault();
+            console.log("addMore click");
+            let index = $("input[name^='Model.Vehicles[']").length;
+            let html =
+                `
+                    <tr>
+                        <th>
+                            <input class="form-control" name="Model.Vehicles[`+ index +`].LicensePlates" />      
+                        </th>
+                        <th>
+                            <select class="form-control" name="Model.Vehicles[` + index +`].CompanyId" />
+                        </th>
+                        <th>
+                            <select class="form-control" name="Model.Vehicles[` + index + `].VehicleType.Title"
+                        </th>
+                        <th class="text-center" style="vertical-align: middle; cursor: pointer">
+                            <a class="delete">Delete</a>
+                        </th>
+                    </tr>
+                `;
+            $(".rows").append(html);
+            let companyIdSelect = $("select[name='Model.Vehicles[" + index + "].CompanyId']");
+            $.each(companySelections, (i, val) => {
+                companyIdSelect.append(new Option(val.text, val.value));
+            });
+
+            let vehicleTypeIdSelect = $("select[name='Model.Vehicles[" + index + "].VehicleType.Title']");
+            $.each(vehicleTypeSelections, (i, val) => {
+                console.log("val", val )
+                vehicleTypeIdSelect.append(new Option(val.text, val.value));
+            });
+
+            $(".delete").click((e) => {
+                e.preventDefault();
+                $(e.target).parent().parent().remove();
+                let companySelects = $("select[name$='.CompanyId']");
+                if (companySelects.length > 0) {
+                    for (let i = 0; i < companySelects.length; i++) {
+                        $(companySelects[i]).attr('name', '[' + i + '].CompanyId');
+                    }
+                }
+                let vehicleTypeSelects = $("select[name$='.VehicleType.Title']");
+                if (vehicleTypeSelects.length > 0) {
+                    for (let i = 0; i < vehicleTypeSelects.length; i++) {
+                        $(vehicleTypeSelects[i]).attr('name', '[' + i + '].VehicleType.Title');
+                    }
+                }
+            });
+
+        });
+        $(".addMoreVehicleType").click((e) => {
+            e.preventDefault();
+            let index = $("input[name^='Model.VehicleTypes']");
+            let html =
+                `
+                    <tr>
+                        <th>
+                            <input class="form-control" name="Model.VehicleFuelTypes[`+index+`].Title" />
+                        </th>
+                        <th class="text-center" style="vertical-align: middle; cursor: pointer">
+                            <a class="deleteMeterType">Delete</a>
+                        </th>
+                    </tr>
+                `;
+            $(".vehicleTypeRows").append(html);
+            $(".deleteMeterType").click((e) => {
+                e.preventDefault();
+                $(e.target).parent().parent().remove();
+                let inputs = $("input[name^='Model.VehicleFuelTypes']");
+                if (inputs.length > 0) {
+                    for (let i = 0; i < inputs.length; i++) {
+                        $(inputs[i]).attr('name', '[' + i + ']');
+                    }
+                }
+                mainContext.revalidateFields();
+            });
+        });
+        $("#vehicleTypesTable").change(() => {
+            mainContext.revalidateFields();
+        });
+
+        this.revalidateFields = () => {
+            let vehicleTypeClones = JSON.parse(JSON.stringify(vehicleTypeSelections));
+            let vehicleTypeInputs = $("input[name$='Title']");
+            let valuesToInject = [];
+            for (let i = 0; i < vehicleTypeInputs.length; i++) {
+                let input = $(vehicleTypeInputs[i]).val();
+                if (input != '') {
+                    valuesToInject.push(input);
+                }
+            }
+            console.log("values to inject", valuesToInject);
+            if (valuesToInject.length != 0) {
+                let vehicleTypeSelects = $("select[name$='.VehicleType.Title']");
+                for (let i = 0; i < vehicleTypeSelects.length; i++) {
+                    $(vehicleTypeSelects[i]).empty();
+                    $.each(vehicleTypeSelections, (z, val) => {
+                        $(vehicleTypeSelects[i]).append(new Option(val.text, val.value));
+                    });
+                    $.each(valuesToInject, (j, val) => {
+                        console.log("append");
+                        $(vehicleTypeSelects[i]).append(new Option(val, val));
+                        console.log("select", $(vehicleTypeSelects[i]));
+                    });
+                }
+            }
+        };
+
+    });
+
+    
+
+</script>
+

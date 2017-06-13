@@ -1,0 +1,62 @@
+@model IEnumerable<DAL.Models.MeasureUnitReportRow>
+@{
+    ViewData["Title"] = "MeasureUnits";
+}
+
+<h2>MeasureUnits report</h2>
+
+<div class="container-fluid">
+    <div class="row">
+        <form>
+            <div class="form-group">
+                <label for="minAmount">MinAmount</label>
+                <input type="number" id="minAmount" name="minAmount" class="form-control" required/>
+            </div>
+            <div class="form-group">
+                <label for="maxAmount">MaxAmount</label>
+                <input type="number" id="maxAmount" name="maxAmount" class="form-control" required/>
+            </div>
+            <button type="submit" class="btn btn-success">Filter</button>
+        </form>
+    </div>
+    @if (Model != null)
+    {
+        <div class="row">
+            <table class="table table-bordered table-hover table-responsive table-striped">
+                <thead>
+                <td>
+                    MeasureUnit
+                </td>
+                <td>
+                    TotalAmount
+                </td>
+                <td>
+                    MinAmount
+                </td>
+                <td>
+                    MaxAmount
+                </td>
+                </thead>
+                <tbody>
+                    @for (int i = 0; i < Model.Count(); i++)
+                {
+                        <tr>
+                            <th>
+                                @Model.ElementAt(i).MeasureUnit
+                            </th>
+                            <th>
+                                @Model.ElementAt(i).TotalAmount
+                            </th>
+                            <th>
+                                @Model.ElementAt(i).MinAmount
+                            </th>
+                            <th>
+                                @Model.ElementAt(i).MaxAmount
+                            </th>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+</div>

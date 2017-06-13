@@ -1,0 +1,42 @@
+@model IEnumerable<DAL.Models.CompanyTypeReportRow>
+@{
+    ViewData["Title"] = "CompanyTypes";
+}
+
+<h2>CompanyTypes report</h2>
+
+<div class="container-fluid">
+    <div class="row">
+        <table class="table table-responsive table-bordered table-striped table-hover">
+            <thead>
+                <tr>
+                    <td>
+                        CompanyType
+                    </td>
+                    <td>
+                        CompanyAmount
+                    </td>
+                    <td>
+                        VehicleAmount
+                    </td>
+                </tr>
+            </thead>
+            <tbody>
+                @for(int i = 0; i < Model.Count(); i++)
+                {
+                    <tr>
+                        <td>
+                            @Model.ElementAt(i).CompanyType
+                        </td>
+                        <td>
+                            @Model.ElementAt(i).CompanyAmount
+                        </td>
+                        <td>
+                            @Model.ElementAt(i).VehicleAmount
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>  
+    </div>
+</div>

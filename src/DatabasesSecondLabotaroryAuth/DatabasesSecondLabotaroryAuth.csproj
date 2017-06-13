@@ -1,0 +1,95 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp1.0</TargetFramework>
+    <PreserveCompilationContext>true</PreserveCompilationContext>
+    <AssemblyName>DatabasesSecondLabotaroryAuth</AssemblyName>
+    <OutputType>Exe</OutputType>
+    <PackageId>DatabasesSecondLabotaroryAuth</PackageId>
+    <UserSecretsId>aspnet-DatabasesSecondLabotaroryAuth-4467d5bb-b1d7-4103-8f16-f4e91d982402</UserSecretsId>
+    <RuntimeFrameworkVersion>1.0.4</RuntimeFrameworkVersion>
+    <PackageTargetFallback>$(PackageTargetFallback);dotnet5.6;portable-net45+win8</PackageTargetFallback>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Content Include="wwwroot\lib\jquery-ui-1.12.1\AUTHORS.txt" />
+    <Content Include="wwwroot\lib\jquery-ui-1.12.1\external\jquery\jquery.js" />
+    <Content Include="wwwroot\lib\jquery-ui-1.12.1\images\ui-icons_444444_256x240.png" />
+    <Content Include="wwwroot\lib\jquery-ui-1.12.1\images\ui-icons_555555_256x240.png" />
+    <Content Include="wwwroot\lib\jquery-ui-1.12.1\images\ui-icons_777620_256x240.png" />
+    <Content Include="wwwroot\lib\jquery-ui-1.12.1\images\ui-icons_777777_256x240.png" />
+    <Content Include="wwwroot\lib\jquery-ui-1.12.1\images\ui-icons_cc0000_256x240.png" />
+    <Content Include="wwwroot\lib\jquery-ui-1.12.1\images\ui-icons_ffffff_256x240.png" />
+    <Content Include="wwwroot\lib\jquery-ui-1.12.1\index.html" />
+    <Content Include="wwwroot\lib\jquery-ui-1.12.1\jquery-ui.css" />
+    <Content Include="wwwroot\lib\jquery-ui-1.12.1\jquery-ui.js" />
+    <Content Include="wwwroot\lib\jquery-ui-1.12.1\jquery-ui.min.css" />
+    <Content Include="wwwroot\lib\jquery-ui-1.12.1\jquery-ui.min.js" />
+    <Content Include="wwwroot\lib\jquery-ui-1.12.1\jquery-ui.structure.css" />
+    <Content Include="wwwroot\lib\jquery-ui-1.12.1\jquery-ui.structure.min.css" />
+    <Content Include="wwwroot\lib\jquery-ui-1.12.1\jquery-ui.theme.css" />
+    <Content Include="wwwroot\lib\jquery-ui-1.12.1\jquery-ui.theme.min.css" />
+    <Content Include="wwwroot\lib\jquery-ui-1.12.1\LICENSE.txt" />
+    <Content Include="wwwroot\lib\jquery-ui-1.12.1\package.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="wwwroot\**\*">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\DAL\DAL.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="1.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.Cookies" Version="1.0.2" />
+    <PackageReference Include="Microsoft.AspNetCore.Diagnostics" Version="1.0.2" />
+    <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="1.0.2" />
+    <PackageReference Include="Microsoft.AspNetCore.Http" Version="1.1.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="1.0.2" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="1.0.3" />
+    <PackageReference Include="Microsoft.AspNetCore.Routing" Version="1.0.3" />
+    <PackageReference Include="Microsoft.AspNetCore.Server.IISIntegration" Version="1.0.2" />
+    <PackageReference Include="Microsoft.AspNetCore.Server.Kestrel" Version="1.0.3" />
+    <PackageReference Include="Microsoft.AspNetCore.StaticFiles" Version="1.0.2" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="1.0.3" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer.Design" Version="1.0.3">
+      <PrivateAssets>All</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="1.0.0">
+      <PrivateAssets>All</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.Extensions.Configuration.EnvironmentVariables" Version="1.0.2" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="1.0.2" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="1.0.2" />
+    <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="1.0.2" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.BrowserLink" Version="1.0.1" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="1.0.0">
+      <PrivateAssets>All</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="MySql.Data.EntityFrameworkCore" Version="7.0.7-m61" />
+    <PackageReference Include="Microsoft.Extensions.Logging" Version="1.1.1" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="1.1.1" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="1.1.1" />
+  </ItemGroup>
+
+  <Target Name="PrepublishScript" BeforeTargets="PrepareForPublish">
+    <Exec Command="bower install" />
+    <Exec Command="dotnet bundle" />
+  </Target>
+
+  <ItemGroup>
+    <DotNetCliToolReference Include="BundlerMinifier.Core" Version="2.2.301" />
+    <DotNetCliToolReference Include="Microsoft.EntityFrameworkCore.Tools.DotNet" Version="1.0.0" />
+    <DotNetCliToolReference Include="Microsoft.Extensions.SecretManager.Tools" Version="1.0.0" />
+    <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="1.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\uploads\" />
+  </ItemGroup>
+
+</Project>

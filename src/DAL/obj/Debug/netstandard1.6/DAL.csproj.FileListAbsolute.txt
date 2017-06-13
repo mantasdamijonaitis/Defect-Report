@@ -1,0 +1,7 @@
+C:\programming\DatabasesSecondLabotaroryAuth\src\DAL\bin\Debug\netstandard1.6\DAL.deps.json
+C:\programming\DatabasesSecondLabotaroryAuth\src\DAL\bin\Debug\netstandard1.6\DAL.dll
+C:\programming\DatabasesSecondLabotaroryAuth\src\DAL\bin\Debug\netstandard1.6\DAL.pdb
+C:\programming\DatabasesSecondLabotaroryAuth\src\DAL\obj\Debug\netstandard1.6\DAL.AssemblyInfo.cs
+C:\programming\DatabasesSecondLabotaroryAuth\src\DAL\obj\Debug\netstandard1.6\DAL.dll
+C:\programming\DatabasesSecondLabotaroryAuth\src\DAL\obj\Debug\netstandard1.6\DAL.pdb
+C:\programming\DatabasesSecondLabotaroryAuth\src\DAL\obj\Debug\netstandard1.6\DAL.csprojResolveAssemblyReference.cache

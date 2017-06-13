@@ -1,0 +1,36 @@
+@model DAL.Models.Vehicle
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Vehicle</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.LicensePlates)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.LicensePlates)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Company)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Company.Title)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.VehicleType)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.VehicleType.Title)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

@@ -1,0 +1,200 @@
+@model DAL.Models.Defect
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h2>Edit</h2>
+
+<form asp-action="Edit" enctype="multipart/form-data" method="post" asp-controller="Defects">
+    <input type="hidden" name="defect.Id" value="@Model.Id" />
+    <div class="form-horizontal">
+        <h4>Defect</h4>
+        <hr />
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <input type="hidden" asp-for="Id" />
+        <div class="form-group">
+            <label asp-for="DateCreated" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input id="dateCreatedDatepicker" name="defect.DateCreated" asp-for="DateCreated" class="form-control" />
+                <span asp-validation-for="DateCreated" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="TermDateTime" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input id="termDateDatepicker" name="defect.TermDateTime" asp-for="TermDateTime" class="form-control" />
+                <span asp-validation-for="TermDateTime" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <div class="checkbox">
+                    <input asp-for="IsFixed" />
+                    <label asp-for="IsFixed"></label>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </div>
+        <div class="container-fluid">
+            <div class="row">
+                <table class="table table-bordered table-hover table-striped table-responsive">
+                    <thead>
+                        <tr>
+                            <th>
+                                Creator
+                            </th>
+                            <th>
+                                Date
+                            </th>
+                            <th>
+                                Photo
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody class="table-rows">
+                        @for (int i = 0; i < Model.Photos.Count; i++)
+                        {
+                            <tr>
+                                <th>
+                                    <input type="hidden" name="defect.Photos[@i].Id" value="@Model.Photos.ElementAt(i).Id" />
+                                    <input type="hidden" name="defect.Photos[@i].DefectId" value="@Model.Photos.ElementAt(i).DefectId" />
+                                    <input class="form-control" name="defect.Photos[@i].Creator" value="@Model.Photos.ElementAt(i).Creator" />
+                                </th>
+                                <th>
+                                    <input class="form-control" name="defect.Photos[@i].CreatedAt" value="@Model.Photos.ElementAt(i).CreatedAt" />
+                                </th>
+                                <th>
+                                @if (Model.Photos[i].Path != null)
+                                {
+                                    <input type="hidden" name="defect.Photos[@i].Path" value="@Model.Photos[i].Path" />
+                                    <a target="_blank" href="@Model.Photos[i].Path">Click here to view</a>
+                                }
+                                else
+                                {
+                                    <input type="file" name="Model.Photos[@i].PhotoFile" />
+                                }
+                                </th>
+                                @if (i > 0)
+                                {
+                                    <th class="text-center" style="vertical-align: middle; cursor: pointer">
+                                        <a class="delete">Delete</a>
+                                    </th>
+                                }
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+                <button id="addMore" class="btn btn-primary">Add more</button>
+                <br />
+                <br />
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+</form>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+<script>
+    $(document).ready(() => {
+        let defect = @Html.Raw(Json.Serialize(Model));
+        $("#dateCreatedDatepicker").datepicker();
+        $("#dateCreatedDatepicker").datepicker('setDate', new Date(defect.dateCreated));
+        $("#dateCreatedDatepicker").datepicker("option", "dateFormat", "yy-mm-dd");
+
+        $("#termDateDatepicker").datepicker();
+        $("#termDateDatepicker").datepicker('setDate', new Date(defect.termDateTime));
+        $("#termDateDatepicker").datepicker("option", "dateFormat", "yy-mm-dd");
+
+        let photoDatepickers = $("input[name$='CreatedAt']");
+        console.log("photoDatepickers", photoDatepickers);
+        if (photoDatepickers.length > 0) {
+            for (let i = 0; i < photoDatepickers.length; i++) {
+                $(photoDatepickers[i]).datepicker();
+                $(photoDatepickers[i]).datepicker('setDate', new Date());
+                $(photoDatepickers[i]).datepicker("option", "dateFormat", "yy-mm-dd");
+            }
+        }
+
+        $(".delete").click((e) => {
+            e.preventDefault();
+            $(e.target).parent().parent().remove();
+            let createdAtInputs = $("input[name$='CreatedAt']");
+            let creatorInputs = $("input[name$='Creator']");
+            let indexInputs = $("input[name$='].Id']");
+            let defectIdInputs = $("input[name$='].DefectId']");
+            if (createdAtInputs.length > 0) {
+                for (let i = 0; i < createdAtInputs.length; i++) {
+                    $(createdAtInputs[i]).attr('name', "defect.Photos[" + i + "].CreatedAt");
+                }
+            }
+            if (creatorInputs.length > 0) {
+                for (let i = 0; i < creatorInputs.length; i++) {
+                    $(creatorInputs[i]).attr('name', "defect.Photos[" + i + "].Creator");
+                }
+            }
+            if (indexInputs.length > 0) {
+                for (let i = 0; i < indexInputs.length; i++) {
+                    $(indexInputs[i]).attr('name', "defect.Photos[" + i + "].Id")
+                }
+            }
+            if (defectIdInputs.length > 0) {
+                for (let i = 0; i < defectIdInputs.length; i++) {
+                    $(defectIdInputs[i]).attr('name', "defect.Photos[" + i + "].DefectId");
+                }
+            }
+        });
+
+        $("#addMore").click((e) => {
+            e.preventDefault();
+            photoDatepickers = $("input[name$='CreatedAt']");
+            let html =
+                `
+                    <tr>
+                        <th>
+                            <input class="form-control" value="Mantas" name="defect.Photos[`+ photoDatepickers.length + `].Creator"/>
+                        </th>
+                        <th>
+                            <input class="form-control" name="defect.Photos[`+ photoDatepickers.length + `].CreatedAt" />
+                        </th>
+                        <th>
+                            <input type="file" name="defect.Photos[`+ photoDatepickers.length +`].PhotoFile" />
+                        </th>
+                        <th class="text-center" style="vertical-align: middle; cursor: pointer">
+                            <a class="delete">Delete</a>
+                        </th>
+                    </tr>
+                `;
+            $(".table-rows").append(html);
+            $("input[name='defect.Photos[" + photoDatepickers.length + "].CreatedAt']").datepicker();
+            $("input[name='defect.Photos[" + photoDatepickers.length + "].CreatedAt']").datepicker('setDate', new Date());
+            $("input[name='defect.Photos[" + photoDatepickers.length + "].CreatedAt']").datepicker("option", "dateFormat", "yy-mm-dd");
+            $(".delete").click((e) => {
+                e.preventDefault();
+                $(e.target).parent().parent().remove();
+                let createdAtInputs = $("input[name$='CreatedAt']");
+                let creatorInputs = $("input[name$='Creator']");
+                if (createdAtInputs.length > 0) {
+                    for (let i = 0; i < createdAtInputs.length; i++) {
+                        $(createdAtInputs[i]).attr('name', "defect.Photos[" + i + "].CreatedAt");
+                    }
+                }
+                if (creatorInputs.length > 0) {
+                    for (let i = 0; i < creatorInputs.length; i++) {
+                        $(creatorInputs[i]).attr('name', "defect.Photos[" + i + "].Creator");
+                    }
+                }
+            });
+
+        });
+
+    });
+</script>
+

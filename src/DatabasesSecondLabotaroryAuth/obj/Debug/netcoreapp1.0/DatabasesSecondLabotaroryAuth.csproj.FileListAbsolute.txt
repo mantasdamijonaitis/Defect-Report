@@ -1,0 +1,12 @@
+C:\programming\DatabasesSecondLabotaroryAuth\src\DatabasesSecondLabotaroryAuth\bin\Debug\netcoreapp1.0\DatabasesSecondLabotaroryAuth.deps.json
+C:\programming\DatabasesSecondLabotaroryAuth\src\DatabasesSecondLabotaroryAuth\bin\Debug\netcoreapp1.0\DatabasesSecondLabotaroryAuth.runtimeconfig.json
+C:\programming\DatabasesSecondLabotaroryAuth\src\DatabasesSecondLabotaroryAuth\bin\Debug\netcoreapp1.0\DatabasesSecondLabotaroryAuth.runtimeconfig.dev.json
+C:\programming\DatabasesSecondLabotaroryAuth\src\DatabasesSecondLabotaroryAuth\bin\Debug\netcoreapp1.0\DatabasesSecondLabotaroryAuth.dll
+C:\programming\DatabasesSecondLabotaroryAuth\src\DatabasesSecondLabotaroryAuth\bin\Debug\netcoreapp1.0\DatabasesSecondLabotaroryAuth.pdb
+C:\programming\DatabasesSecondLabotaroryAuth\src\DatabasesSecondLabotaroryAuth\bin\Debug\netcoreapp1.0\DAL.dll
+C:\programming\DatabasesSecondLabotaroryAuth\src\DatabasesSecondLabotaroryAuth\bin\Debug\netcoreapp1.0\DAL.pdb
+C:\programming\DatabasesSecondLabotaroryAuth\src\DatabasesSecondLabotaroryAuth\obj\Debug\netcoreapp1.0\DatabasesSecondLabotaroryAuth.csprojResolveAssemblyReference.cache
+C:\programming\DatabasesSecondLabotaroryAuth\src\DatabasesSecondLabotaroryAuth\obj\Debug\netcoreapp1.0\DatabasesSecondLabotaroryAuth.AssemblyInfo.cs
+C:\programming\DatabasesSecondLabotaroryAuth\src\DatabasesSecondLabotaroryAuth\obj\Debug\netcoreapp1.0\DatabasesSecondLabotaroryAuth.dll
+C:\programming\DatabasesSecondLabotaroryAuth\src\DatabasesSecondLabotaroryAuth\obj\Debug\netcoreapp1.0\DatabasesSecondLabotaroryAuth.pdb
+C:\programming\DatabasesSecondLabotaroryAuth\src\DatabasesSecondLabotaroryAuth\obj\Debug\netcoreapp1.0\UserSecretsAssemblyInfo.cs

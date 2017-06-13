@@ -1,0 +1,93 @@
+@model IEnumerable<DAL.Models.Company>
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h2>Create</h2>
+
+<form asp-action="Create">
+    <div class="form-horizontal">
+        <h4>Company</h4>
+        <hr />
+        <div class="row">
+            <div class="col-lg-8 col-md-8">
+                <table class="table table-responsive table-bordered table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th>Title</th>
+                            <th>Code</th>
+                            <th>Company Type</th>
+                        </tr>
+                    </thead>
+                    <tbody class="rows">
+                        @for (int i = 0; i < Model.Count(); i++)
+                        {
+                            <tr>
+                                <th>
+                                    <input class="form-control" name="[@i].Title" value="@Model.ElementAt(i).Title" />
+                                </th>
+                                <th>
+                                    <input class="form-control" name="[@i].Code" value="@Model.ElementAt(i).Code" />
+                                </th>
+                                <th>
+                                    <select class="form-control" name="[@i].CompanyTypeId" asp-items="ViewBag.CompanyTypeId"></select>
+                                </th>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+                <button class="btn btn-primary addMore">Add more</button>
+                <button class="btn btn-success" type="submit">Save</button>
+            </div>
+        </div>
+    </div>
+</form>
+
+<script>
+    var companyTypeSelections = @Html.Raw(Json.Serialize(ViewBag.CompanyTypeId));
+    $(document).ready(() => {
+        $(".addMore").click((e) => {
+            e.preventDefault();
+            let index = $("input[name$=Title]").length;
+            let html = `
+                <tr>
+                    <th>
+                        <input class="form-control" name="[` + index + `].Title" />
+                    </th>
+                    <th>
+                        <input class="form-control" name="[` + index + `].Code" />
+                    </th>
+                    <th>
+                        <select class="form-control" name="[` + index + `].CompanyTypeId" />
+                    </th>
+                    <th class="text-center" style="vertical-align:middle; cursor: pointer">
+                        <a class="delete">Delete</a>
+                    </th>
+                </tr>
+            `;
+            $(".rows").append(html);
+            let select = $("select[name='[" + index + "].CompanyTypeId']");
+            $.each(companyTypeSelections, (i, val) => {
+                select.append(new Option(val.text, val.value));
+            });
+
+            $(".delete").click((e) => {
+                e.preventDefault();
+                $(e.target).parent().parent().remove();
+                let selects = $("select[name^='[']");
+                if (selects.length > 0) {
+                    for (let i = 0; i < selects.length; i++) {
+                        $(selects[i]).attr('name', '[' + i + ']');
+                    }
+                }
+            });
+
+        });
+    });
+</script>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+

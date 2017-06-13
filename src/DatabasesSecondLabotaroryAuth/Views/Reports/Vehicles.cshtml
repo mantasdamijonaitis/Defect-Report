@@ -1,0 +1,126 @@
+﻿@model IEnumerable<DAL.Models.VehicleReportRow>
+@{
+    ViewData["Title"] = "VehicleReport";
+}
+
+<h2>Vehicles report</h2>
+
+<div class="container-fluid">
+    <div class="row">
+        <form>
+            <div class="form-group">
+                <label for="fragment">Fragment</label>
+                    <input type="text" class="form-control" id="fragment" name="fragment" required />
+            </div>
+            <button type="submit" class="btn btn success">Filter</button>
+        </form>
+    </div>
+    @if (Model != null)
+    {
+        <div class="container-fluid" style="margin-top: 20px;">
+        @for (int i = 0; i < Model.Count(); i++)
+        {
+            <div class="row">
+                <h4>VehicleInfo</h4>
+                <table class="table table-bordered table-responsive">
+                    <thead>
+                        <tr>
+                            <td>
+                                LicensePlates
+                            </td>
+                            <td>
+                                VehicleType
+                            </td>
+                            <td>
+                                Company
+                            </td>
+                            <td>
+                                CompanyType
+                            </td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                @Model.ElementAt(i).Vehicle.LicensePlates
+                            </td>
+                            <td>
+                                @Model.ElementAt(i).Vehicle.VehicleType.Title
+                            </td>
+                            <td>
+                                @Model.ElementAt(i).Vehicle.Company.Title
+                            </td>
+                            <td>
+                                @Model.ElementAt(i).Vehicle.Company.CompanyType.Title
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                @if (Model.ElementAt(i).DefectReportRows != null && Model.ElementAt(i).DefectReportRows.Count() > 0)
+                {
+                    <h5>DefectInfo</h5>
+                    <div class="container-fluid" style="margin-top: 20px">
+                        <table class="table table-responsive table-bordered table-striped">
+                            <thead>
+                                <tr>
+                                    <td>
+                                        CreatedAt
+                                    </td>
+                                    <td>
+                                        TermDate
+                                    </td>
+                                    <td>
+                                        IsFixed
+                                    </td>
+                                    <td>
+                                        PhotoCount
+                                    </td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @for (int j = 0; j < Model.ElementAt(i).DefectReportRows.Count(); j++)
+                                {
+                                    <tr>
+                                        <td>
+                                            @Model.ElementAt(i).DefectReportRows.ElementAt(j).DateAndTime
+                                        </td>
+                                        <td>
+                                            @Model.ElementAt(i).DefectReportRows.ElementAt(j).TermDateAndTime
+                                        </td>
+                                        <td>
+                                            @Model.ElementAt(i).DefectReportRows.ElementAt(j).IsFixed
+                                        </td>
+                                        <td>
+                                            @Model.ElementAt(i).DefectReportRows.ElementAt(j).PhotoCount
+                                        </td>
+                                    </tr>
+                                }
+                                <tr>
+                                    <td align="right" colspan="3">
+                                        Total:
+                                    </td>
+                                    <td>
+                                        @Model.ElementAt(i).DefectReportRows.Sum(x => x.PhotoCount)
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                }
+            </div>
+    }
+        <table class="table table-responsive table-bordered table-striped">
+            <thead>
+                <tr>
+                    <td align="right" colspan="3" style="padding-left: 9%;">
+                        Total:
+                    </td>
+                    <td>
+                        @Model.Sum(x => x.DefectReportRows.Sum(y => y.PhotoCount))
+                    </td>
+                </tr>
+            </thead>
+        </table>
+        </div>
+    }
+</div>
